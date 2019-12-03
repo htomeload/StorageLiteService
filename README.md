@@ -24,7 +24,7 @@ const result = storagelite._storeData();
     ```bash
     storagelite._retriveKeys();
     
-    // return: Array<string>
+    // return: ['searchwords', 'wallet', 'quantity', 'name']
     ```
 
 - _retriveData(key: string)
