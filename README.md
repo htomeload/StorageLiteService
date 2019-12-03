@@ -16,7 +16,7 @@ const result = storagelite._storeData();
 ```
 
 - Ionic Framework version
-Just import StorageLite into page then declare in constructor and you're set.
+Just import StorageLiteService into page then declare in constructor and you're set.
 
 ## Available functions
 - _retriveKeys()
