@@ -1,7 +1,10 @@
 # StorageLiteService
 Library that make using LocalStorage be more easily and simple. This Library covered all exist function of LocalStorage with extra code such as handle error and value to make retriving and storing be simplest as just call then done.
 
-# Usage
+Currently, there is available in Web version and Ionic Framework version.
+
+## Usage
+- Web version
 Just do 
 ```
 <script src="storage-lite.service.js"></script>
@@ -12,7 +15,10 @@ and you're ready to go, use `storagelite` with following available functions. Fo
 const result = storagelite._storeData();
 ```
 
-Available function is below
+- Ionic Framework version
+Just import StorageLite into page then declare in constructor and you're set.
+
+## Available functions
 - _retriveKeys()
 Get all available key in LocalStorage.
 
