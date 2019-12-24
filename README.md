@@ -10,6 +10,9 @@ Currently, there is available in Web version and Ionic Framework version.
 * Ionic Framework (ionic)
     - Ionic Framework >= 3
 
+* React Native (react-native)
+    - React Native >= 0.6
+
 ## Usage
 - Web version
     - Just do 
@@ -24,6 +27,25 @@ const result = storagelite._storeData();
 
 - Ionic Framework version
     - Just import StorageLiteService into page then declare in constructor and you're set.
+```
+import { StorageLiteService } from './storage-lite.service' 
+
+export class exampleClass {
+  	...
+
+	constructor(private `whatevername`: StorageLiteService) {
+    }
+
+    ...
+}
+```
+
+- React Native version
+    - Just do 
+```
+import { `whatevername` } from './storage-lite' 
+```
+and use it with `whatevername` as you defined.
 
 ## Available functions
 - _retriveKeys()

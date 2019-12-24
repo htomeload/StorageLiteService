@@ -62,12 +62,16 @@
                 if (acceptDataType[ typeof value ]){
                     let v_ = "";
 
-                    if (value instanceof Array || value instanceof Object){
+                    if (value instanceof Array || (typeof value === "object" || value instanceof Object)){
                         v_ = JSON.stringify(value);
                     }else if ((Number.isInteger(value) || Number.isFinite(value)) && !Number.isNaN(value)){
                         v_ = value.toString();
-                    }else if (value instanceof Boolean){
-                        v_ = value.toString();
+                    }else if (typeof value === "boolean" || value instanceof Boolean){
+                        if (value) {
+                            v_ = "true";
+                        }else{
+                            v_ = "false";
+                        }
                     }else{
                         v_ = value;
                     }

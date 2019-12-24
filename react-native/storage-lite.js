@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { AsyncStorage } from 'react-native'
 
 const acceptDataType = {
 	'string': true,
@@ -11,31 +11,21 @@ const acceptDataType = {
 	'undefined': false
 };
 
-@Injectable({
-	providedIn: 'root'
-})
-export class StorageLiteService {
+export const StorageLite =  {
 
-	constructor() { }
-
-	_retriveKeys() {
+	async _retriveKeys() {
 		try {
-			let key_ = [];
-
-			for(let key of Object.keys(localStorage)) {
-				key_.push(key);
-			}
+			let key_ = await AsyncStorage.getAllKeys();
 
 			return key_;
 		} catch (error) {
-			console.error(error);
-			return false;
+			console.log(error);
 		}
-	}
+	},
 
-	_retriveData(key: string) {
+	async _retriveData(key) {
 		try {
-			let item_ = localStorage.getItem(key);
+			let item_ = await AsyncStorage.getItem(key);
 
 			if (item_) {
 				if ((item_.substr(0, 1) == "{" && item_.substr(item_.length-1, 1) == "}") || (item_.substr(0, 1) == "[" && item_.substr(item_.length-1, 1) == "]")){
@@ -53,19 +43,16 @@ export class StorageLiteService {
 				}else{
                     return item_;
                 }
-			}else{
-				return false;
 			}
 		} catch (error) {
-			console.error(error);
-			return false;
+			console.log(error);
 		}
-	}
+	},
 
-	_storeData(key: string, value: any) {
+	async _storeData(key, value) {
 		try {
 			if (acceptDataType[ typeof value ]){
-				let v_: any = "";
+				let v_ = "";
 
 				if (value instanceof Array || (typeof value === "object" || value instanceof Object)){
 					v_ = JSON.stringify(value);
@@ -81,36 +68,32 @@ export class StorageLiteService {
 					v_ = value;
 				}
 
-				localStorage.setItem(key, v_);
+				await AsyncStorage.setItem(key, v_);
 				return true;
 			}else{
 				let name_ = Object.keys(value);
-				console.error("StorageLiteService: _storeData(); type of value "+name_[0]+"("+(typeof value)+") is not valid type.");
-				return false;
+				console.log("StorageLiteService: _storeData(); type of value "+name_[0]+"("+(typeof value)+") is not valid type.");
 			}
 		} catch (error) {
-			console.error(error);
-			return false;
+			console.log(error);
 		}
-	}
+	},
 
-	_removeData(key: string) {
+	async _removeData(key) {
 		try {
-			localStorage.removeItem(key);
+			await AsyncStorage.removeItem(key);
 			return true;
 		} catch (error) {
-			console.error(error);
-			return false;
+			console.log(error);
 		}
-	}
+	},
 
-	_truncateData() {
+	async _truncateData() {
 		try {
-			localStorage.clear();
+			await AsyncStorage.clear();
 			return true;
 		} catch (error) {
-			console.error(error);
-			return false;
+			console.log(error);
 		}
 	}
 }
