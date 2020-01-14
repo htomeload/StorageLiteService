@@ -48,7 +48,7 @@ import { `whatevername` } from './storage-lite'
 and use it with `whatevername` as you defined.
 
 ## Note
-For `React Native version`, this library is relay on AsyncStorage of React Native, library itself is already import it within library, so just import `storage-lite` is enough. And because library is relay on AsyncStorage, so return will be promise, also with that, all function in library will be async. Last, this library **is not** covered all of AsyncStorage functions, just basic usage, so, if there is not have any function you want, then use AsyncStorage instead.
+For `React Native version`, this library is relay on AsyncStorage of React Native, library itself is already import it within library, so just import `storage-lite` is enough. And because library is relay on AsyncStorage, so return will be promise, also with that, all function in library will be async. Last, this library ***is not*** covered all of AsyncStorage functions, just basic usage, so, if there is not have any function you want, then use AsyncStorage instead.
 
 ## Available functions
 - _retriveKeys()
