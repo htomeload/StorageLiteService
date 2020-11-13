@@ -18,6 +18,10 @@ export class StorageLiteService {
 
 	constructor() { }
 
+    /**
+     * Return all keys in storage
+     * @return {[string]} Array contain keys as string
+     */
 	_retriveKeys() {
 		try {
 			let key_ = [];
@@ -33,12 +37,18 @@ export class StorageLiteService {
 		}
 	}
 
-	_retriveData(key: string) {
+    /**
+     * Get data from storage, then convert back to its original form
+     * @param {string} key **required** - Key of needed data
+     * @param {*} empty Desired return value in case of retriving was failed
+     * @return {(object|array|number|string|boolean)} Up to type of stored data, possible be Object, Array, Number, String and Boolean
+     */
+	_retriveData(key: string, empty: boolean = false) {
 		try {
 			let item_ = localStorage.getItem(key);
 
 			if (item_) {
-				if ((item_.substr(0, 1) == "{" && item_.substr(item_.length-1, 1) == "}") || (item_.substr(0, 1) == "[" && item_.substr(item_.length-1, 1) == "]")){
+				if ((/(^(\{).*\}$)|(^(\[).*\]$)/.test(item_))){
 					return JSON.parse(item_);
 				}else if ((/^\d+?$/.test(item_))){
 					return parseInt(item_);
@@ -54,14 +64,20 @@ export class StorageLiteService {
                     return item_;
                 }
 			}else{
-				return false;
-			}
+                return empty;
+            }
 		} catch (error) {
 			console.error(error);
 			return false;
 		}
 	}
 
+    /**
+     * Store data into storage, will convert data to be string form before storing if necessary
+     * @param {string} key **required** - Key of data to be stored 
+     * @param {(object|array|number|string|boolean)} value **required** - Value to be stored
+     * @return {boolean} true in *succeed* case, otherwise will return false 
+     */
 	_storeData(key: string, value: any) {
 		try {
 			if (acceptDataType[ typeof value ]){
@@ -79,14 +95,18 @@ export class StorageLiteService {
                     }
                 }else{
 					v_ = value;
-				}
+                }
 
 				localStorage.setItem(key, v_);
 				return true;
 			}else{
-				let name_ = Object.keys(value);
-				console.error("StorageLiteService: _storeData(); type of value "+name_[0]+"("+(typeof value)+") is not valid type.");
-				return false;
+				if (typeof value !== 'undefined') {
+				    let name_ = Object.keys(value);
+                    console.log("StorageLiteService: _storeData(); type of value "+name_[0]+"("+(typeof value)+") is not valid type.");
+                }else{
+                    console.log("StorageLiteService: _storeData(); value is undefined.");
+                }
+                return false;
 			}
 		} catch (error) {
 			console.error(error);
@@ -94,6 +114,11 @@ export class StorageLiteService {
 		}
 	}
 
+    /**
+     * Remove data from storage
+     * @param {string} key **required** - Key of data to remove 
+     * @return {boolean} true in case of *succeed*
+     */
 	_removeData(key: string) {
 		try {
 			localStorage.removeItem(key);
@@ -104,6 +129,10 @@ export class StorageLiteService {
 		}
 	}
 
+    /**
+     * Remove ***all*** data from storage
+     * @return {boolean} true in case of *succeed*
+     */
 	_truncateData() {
 		try {
 			localStorage.clear();
